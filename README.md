@@ -34,6 +34,7 @@
 Примеры
 
 Пример конфигурации appsettings.json:
+```json
 {
   "UseGoogleSheets": true,
   "ExcelFilePath": "C:\\path\\to\\your\\file.xlsx",
@@ -49,3 +50,4 @@
   "ClassDays" : "Вторник, Пятница",
   "WebinarDays" : "Среда"
 }
+```
