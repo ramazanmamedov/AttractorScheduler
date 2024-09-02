@@ -20,7 +20,7 @@ public class TeacherSchedule : ITeacherSchedule
         _webinarPreparationRow = teacherRow + _config.WebinarPreparationRowOffset;
     }
 
-    public void FillSchedule(DayOfWeek[] classDays, DayOfWeek[] webinarDays)
+    public void FillSchedule()
     {
         var year = DateTime.Now.Year;
         var month = DateTime.Now.Month;
@@ -31,6 +31,9 @@ public class TeacherSchedule : ITeacherSchedule
         {
             var currentDate = new DateTime(year, month, day);
 
+            var classDays = ParseDays(_config.ClassDays);
+            var webinarDays = ParseDays(_config.WebinarDays);
+            
             if (classDays.Contains(currentDate.DayOfWeek) || webinarDays.Contains(currentDate.DayOfWeek))
             {
                 var column = _scheduler.GetColumnForDay(day, startColumn);
@@ -59,6 +62,30 @@ public class TeacherSchedule : ITeacherSchedule
         {
             _scheduler.FillCell(_webinarRow, column, _config.WebinarDurationHours);
             _scheduler.FillCell(_webinarPreparationRow, column, _config.WebinarPreparationHours);
+        }
+    }
+    private DayOfWeek[] ParseDays(string input)
+    {
+        var daysMapping = new[]
+        {
+            new { Russian = "понедельник", English = DayOfWeek.Monday },
+            new { Russian = "вторник", English = DayOfWeek.Tuesday },
+            new { Russian = "среда", English = DayOfWeek.Wednesday },
+            new { Russian = "четверг", English = DayOfWeek.Thursday },
+            new { Russian = "пятница", English = DayOfWeek.Friday },
+            new { Russian = "суббота", English = DayOfWeek.Saturday },
+            new { Russian = "воскресенье", English = DayOfWeek.Sunday }
+        };
+
+        try
+        {
+            return input.Split(',')
+                .Select(day => daysMapping.First(d => d.Russian.Equals(day.Trim(), StringComparison.OrdinalIgnoreCase)).English)
+                .ToArray();
+        }
+        catch
+        {
+            throw new ArgumentException($"Неправильный формат дней. Убедитесь, что дни введены на русском языке.");
         }
     }
 }

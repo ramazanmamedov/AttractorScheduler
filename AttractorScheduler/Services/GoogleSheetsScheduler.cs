@@ -57,7 +57,7 @@ public class GoogleSheetsScheduler : IScheduler
     public void FillCell(int row, int column, double value)
     {
         column++; //не знаю почему, но google sheets берет предыдущую колонку, не смог разобраться
-        var range = $"{_sheetName}!{GetColumnName(column)}{row + 2}";
+        var range = $"{_sheetName}!{GetColumnName(column)}{row + 1}";
         var valueRange = new ValueRange { Values = new List<IList<object>> { new List<object> { value } } };
 
         var updateRequest = _service.Spreadsheets.Values.Update(valueRange, _spreadsheetId, range);
