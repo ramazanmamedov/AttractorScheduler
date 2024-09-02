@@ -10,13 +10,11 @@ public class TeacherSchedule : ITeacherSchedule
     private readonly int _classPreparationRow;
     private readonly int _webinarRow;
     private readonly int _webinarPreparationRow;
-    private readonly ILogger _logger;
 
-    public TeacherSchedule(IScheduler scheduler, int teacherRow, AppConfig config, ILogger logger)
+    public TeacherSchedule(IScheduler scheduler, int teacherRow, AppConfig config)
     {
         _scheduler = scheduler;
         _config = config;
-        _logger = logger;
         _classPreparationRow = teacherRow + _config.ClassPreparationRowOffset;
         _webinarRow = teacherRow + _config.WebinarRowOffset;
         _webinarPreparationRow = teacherRow + _config.WebinarPreparationRowOffset;

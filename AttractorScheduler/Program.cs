@@ -25,7 +25,7 @@ try
 
     logger.LogSuccess($"INFO: Начинаю заполнять расписание для {config.TeacherName.ToUpper()} на {currentMonthName.ToUpper()}");
 
-    ITeacherSchedule teacherSchedule = new TeacherSchedule(scheduler, teacherRow, config, logger);
+    ITeacherSchedule teacherSchedule = new TeacherSchedule(scheduler, teacherRow, config);
     teacherSchedule.FillSchedule(
         ParseDays(config.ClassDays), 
         ParseDays(config.WebinarDays));
