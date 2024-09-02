@@ -26,9 +26,10 @@ public class TeacherSchedule : ITeacherSchedule
     {
         var year = DateTime.Now.Year;
         var month = DateTime.Now.Month;
+        var today = DateTime.Now.Day;
         var startColumn = 1;
 
-        for (var day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+        for (var day = 1; day <= today; day++)
         {
             var currentDate = new DateTime(year, month, day);
 
@@ -40,7 +41,7 @@ public class TeacherSchedule : ITeacherSchedule
                 startColumn = column + 1;
 
                 if (classDays.Contains(currentDate.DayOfWeek)) 
-                    AddClassPreparationDay(column);
+                    AddClassDay(column);
 
                 if (webinarDays.Contains(currentDate.DayOfWeek)) 
                     AddWebinarDay(column);
@@ -48,7 +49,7 @@ public class TeacherSchedule : ITeacherSchedule
         }
     }
 
-    private void AddClassPreparationDay(int column)
+    private void AddClassDay(int column)
     {
         if (column != -1)
             _scheduler.FillCell(_classPreparationRow, column, _config.ClassDurationHours);
